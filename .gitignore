@@ -1,0 +1,22 @@
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# TensorFlow 日志、模型、检查点
+tmp/
+logs/
+saved_models/
+checkpoints/
+data/
+*.ckpt
+*.h5
+
+# PyCharm配置文件夹
+.idea/
+*.iml
+
+# 虚拟环境
+venv/
+env/
