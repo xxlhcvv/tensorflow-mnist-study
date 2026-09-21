@@ -1,7 +1,17 @@
+import os
+
+# 必须在导入 tensorflow 之前设置，屏蔽 TensorFlow 的 INFO/WARNING 日志
+# 0=全部输出 1=屏蔽INFO 2=屏蔽INFO和WARNING 3=屏蔽全部
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+import warnings
+
+# 屏蔽 Python 层面的警告（如弃用警告等）
+warnings.filterwarnings('ignore')
+
 import tensorflow as tf
 import pandas as pd
 from tensorflow.keras import datasets  # 导入经典数据集
-import os
 import matplotlib.pyplot as plt
 
 # 加载 MNIST  data
@@ -111,3 +121,27 @@ for image, label in images_ds.take(1):
     plt.axis('off')
     plt.show()
 
+
+x = tf.keras.Input(shape=(32, ))
+y = tf.keras.layers.Dense(16, activation='softmax')(x)
+model = tf.keras.Model(x, y)
+print(model)
+model = tf.keras.Sequential()
+# 展平为一维数组
+model.add(tf.keras.Input(shape=(28, 28)))
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(10, activation='softmax'))
+# 构建单个全连接层
+model = tf.keras.Sequential()
+# 输入矩阵的大小为 (None, 16)
+model.add(tf.keras.Input(shape=(16, )))
+model.add(tf.keras.layers.Dense(32, activation='relu'))
+# 输出的大小为 (None, 32)
+print('输出大小：', model.output_shape)
+model = tf.keras.Sequential()
+# 输入矩阵的大小为 (None, 1)
+model.add(tf.keras.Input(shape=(1, )))
+# 定义第一个全连接层
+model.add(tf.keras.layers.Dense(5, activation='sigmoid'))
+# 定义第二个全连接层（输出层，二分类，sigmoid）
+model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
